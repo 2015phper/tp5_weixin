@@ -129,7 +129,7 @@ class Img extends Base{
 			$imgModel = new ImgModel;
 			$imgModel->where('id', $id)->delete();
 			$keywordModel = new KeywordModel;
-			$KeywordModel->where('pid', $id)->where('module','img')->delete();
+			$keywordModel->where('pid', $id)->where('module','img')->delete();
 
 			Db::commit();
 			return $this->success('删除成功');

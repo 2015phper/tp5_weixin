@@ -115,7 +115,7 @@ class Text extends Base{
 
 		Db::startTrans();
 		try{
-			$textModel = new TextModel();
+			$textModel = new TextModel;
 			$textModel->where('id',$id)->delete();
 			$keywordModel = new KeywordModel;
 			$keywordModel->where('pid',$id)->where('module','text')->delete();

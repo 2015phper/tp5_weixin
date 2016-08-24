@@ -4,7 +4,7 @@
 ```
 git clone https://github.com/ningbnii/tp5_weixin.git
 ```
-- 然后进入auth_tp5目录，下载TP5的核心框架包
+- 然后进入项目根目录，下载TP5的核心框架包
 ```
 git clone https://github.com/top-think/framework.git
 ```
@@ -15,5 +15,7 @@ composer update
 - 修改数据库配置文件
 - 修改config.php中的微信公众号相关参数，修改site_url,img_server为你自己的地址
 - 登陆用户名：admin 密码：123456
+
+推荐使用phpstudy搭建php的集成环境，配置虚拟域名，将项目地址指向public_html，关于phpstudy的使用方法，自行搜索。
 
 有问题可以发邮件给我<296720094@qq.com>，TP5交流群390246240
