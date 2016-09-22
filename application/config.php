@@ -149,15 +149,22 @@ return [
     // +----------------------------------------------------------------------
     // | 缓存设置
     // +----------------------------------------------------------------------
-    'cache'                  => [
-        // 驱动方式
-        'type'   => 'File',
-        // 缓存保存目录
-        'path'   => CACHE_PATH,
-        // 缓存前缀
-        'prefix' => '',
-        // 缓存有效期 0表示永久缓存
-        'expire' => 0,
+    'cache' =>  [
+        // 使用复合缓存类型
+        'type'  =>  'complex',
+        // 默认使用的缓存
+        'default'   =>  [
+            // 驱动方式
+            'type'   => 'redis',
+            // 服务器地址
+            'host'       => '127.0.0.1',
+        ],   
+        'file'   =>  [
+            // 驱动方式
+            'type'   => 'File',
+            // 缓存保存目录
+            'path'   => CACHE_PATH,
+        ],     
     ],
     // +----------------------------------------------------------------------
     // | 会话设置
@@ -203,11 +210,11 @@ return [
     'UC_API_TYPE'=>'Model',
     'UC_AUTH_KEY'=>'P~^nlxj3i?e-%pwSHr"gLyA|EQ+Is@5!1.2RbM<W',
     // 微信配置
-    'token'=>'wxbuluo',
+    'token'=>'',
     'encodingaeskey'=>'',
-    'appid'=>'wx4aa6333df1e2b1b6',
-    'appsecret'=>'e25a9ecdc4b844db83c1646fb555170d',
+    'appid'=>'',
+    'appsecret'=>'',
 
-    'site_url'=>'http://demo.wxbuluo.com',
-    'img_server'=>'http://demo.wxbuluo.com',
+    'site_url'=>'http://ning.tp14.com',
+    'app_url'=>'http://ionic.wxbuluo.com',
 ];
