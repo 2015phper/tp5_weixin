@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>2048</title>
+
+  <link href="/static/css/game2048/main.min.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
+  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+  <style>
+  {if $data.status == 200}
+  {if $data.data.img2}
+.tile.tile-2 .tile-inner {
+    /* background: #eee4da */
+    background-image: url({$data.data.img2});
+}
+{/if}
+{if $data.data.img4}
+.tile.tile-4 .tile-inner {
+    /* background: #ede0c8 */
+    background-image: url({$data.data.img4});
+}
+{/if}
+{if $data.data.img8}
+.tile.tile-8 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f2b179 */
+    background-image: url({$data.data.img8});
+}
+{/if}
+{if $data.data.img16}
+.tile.tile-16 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f59563 */
+    background-image: url({$data.data.img16});
+}
+{/if}
+{if $data.data.img32}
+.tile.tile-32 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f67c5f */
+    background-image: url({$data.data.img32});
+}
+{/if}
+{if $data.data.img64}
+.tile.tile-64 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f65e3b */
+    background-image: url({$data.data.img64});
+}
+{/if}
+{if $data.data.img128}
+.tile.tile-128 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f65e3b */
+    background-image: url({$data.data.img128});
+}
+{/if}
+{if $data.data.img256}
+.tile.tile-256 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f65e3b */
+    background-image: url({$data.data.img256});
+}
+{/if}
+{if $data.data.img512}
+.tile.tile-512 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f65e3b */
+    background-image: url({$data.data.img512});
+}
+{/if}
+{if $data.data.img1024}
+.tile.tile-1024 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f65e3b */
+    background-image: url({$data.data.img1024});
+}
+{/if}
+{if $data.data.img2048}
+.tile.tile-2048 .tile-inner {
+    /* color: #f9f6f2; */
+    /* background: #f65e3b */
+    background-image: url({$data.data.img2048});
+}
+{/if}
+   {/if} 
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="heading">
+      <h1 class="title">2048</h1>
+      <div class="scores-container">
+        <div class="score-container" id="score-container">0</div>
+        <div class="best-container" id="best-container">{$data.data.score}</div>
+      </div>
+    </div>
+
+
+    <div class="above-game">
+      <a class="rank-button" style="float:left;" id="rank">查看排行榜</a>
+      <a class="restart-button">New Game</a>
+    </div>
+
+
+    <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+	        <a class="keep-playing-button">Keep going</a>
+          <a class="retry-button">Try again</a>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+
+
+  </div>
+  {if $data.status == 400}
+  <div class="backdrop visible backdrop-loading active"></div>
+  <div class="loading-container visible active"><div class="loading"><span>{$data.error}</span></div></div>
+  {/if}
+  <input type="hidden" name="id" value="{if isset($_GET['id'])}{$Think.get.id}{/if}" id="activity_id">
+  <input type="hidden" name="wxuid" value="{$Think.cookie.wxuid}" id="wxuid">
+  <input type="hidden" name="openid" value="{$Think.cookie.openid}" id="openid">
+  <input type="hidden" value="{$data.data.score}" id="score">
+  <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+  <script src="/static/js/game2048/bind_polyfill.min.js"></script>
+  <script src="/static/js/game2048/classlist_polyfill.min.js"></script>
+  <script src="/static/js/game2048/animframe_polyfill.min.js"></script>
+  <script src="/static/js/game2048/keyboard_input_manager.min.js"></script>
+  <script src="/static/js/game2048/html_actuator.min.js"></script>
+  <script src="/static/js/game2048/grid.min.js"></script>
+  <script src="/static/js/game2048/tile.min.js"></script>
+  <script src="/static/js/game2048/local_storage_manager.min.js"></script>
+  <script src="/static/js/game2048/game_manager.min.js"></script>
+  <script src="/static/js/game2048/application.min.js"></script>
+
+  <script>
+      var rank = document.getElementById('rank');
+      rank.addEventListener('click', rankClick,false);
+      function rankClick(){
+        //最新分数
+        var scoreObj = document.getElementById('score-container');
+        var scoreVal = scoreObj.innerHTML;
+        var score = scoreVal.substring(0,scoreVal.indexOf('<'));
+
+        //最高分数
+        var bestScoreObj = document.getElementById('best-container');
+        var bestScoreVal = bestScoreObj.innerHTML;
+
+
+        var maxScore = Math.max(score, bestScoreVal);
+        var activity_id = $('#activity_id').val();
+        var wxuid = $('#wxuid').val();
+        var openid = $('#openid').val();
+        $.post('/index/game2048/update', {wxuid: wxuid,score:maxScore, openid: openid, activity_id: activity_id}, function(data, textStatus, xhr) {
+          if(data.status == 200){
+            window.location.href = "/index/game2048/rank?score=" + maxScore + "&activity_id=" + activity_id;
+          }else{
+            alert(data.error)
+          }
+        },'json');
+      }
+
+  </script>
+</body>
+</html>
