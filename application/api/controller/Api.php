@@ -117,7 +117,11 @@ class Api{
 		}else{
 			// 如果没有匹配到关键词
 			$otherData = Db::name('other')->find();
-			$this->keyword($otherData['keyword']);
+			if(!$otherData){
+				$this->weObj->text('感谢您的关注，技术QQ：296720094')->reply();
+			}else{
+				$this->keyword($otherData['keyword']);
+			}
 		}
 
 	}

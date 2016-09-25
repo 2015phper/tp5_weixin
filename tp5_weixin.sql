@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2016-09-25 11:34:42
+Date: 2016-09-25 17:14:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,7 +50,7 @@ CREATE TABLE `auth_group` (
 -- ----------------------------
 -- Records of auth_group
 -- ----------------------------
-INSERT INTO `auth_group` VALUES ('1', '管理员', '1', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,28,30,31,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56', '', '0', '1466780039');
+INSERT INTO `auth_group` VALUES ('1', '管理员', '1', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,28,30,31,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58', '', '0', '1466780039');
 INSERT INTO `auth_group` VALUES ('6', '初级管理员', '1', '6,1,37,38,43,39,40,41,42,44,47,45,46,52,55,54,53,56,2,13,3,4', '初级管理员', '1466910557', '1469962873');
 
 -- ----------------------------
@@ -90,7 +90,7 @@ CREATE TABLE `auth_rule` (
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
   `icon` varchar(30) NOT NULL COMMENT '图标',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of auth_rule
@@ -130,6 +130,8 @@ INSERT INTO `auth_rule` VALUES ('38', 'admin/areply/index', '关注回复', '1',
 INSERT INTO `auth_rule` VALUES ('53', 'admin/diymen/add', '添加菜单', '1', '1', '', '1469959321', '1469959321', '52', '0-37-52', '0', '0', '');
 INSERT INTO `auth_rule` VALUES ('52', 'admin/diymen/index', '自定义菜单', '1', '1', '', '1469949477', '1469950606', '37', '0-37', '4', '1', '');
 INSERT INTO `auth_rule` VALUES ('56', 'admin/diymen/createMenu', '生成菜单', '1', '1', '', '1469961548', '1469961576', '52', '0-37-52', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('57', 'admin/other/index', '默认回复', '1', '1', '', '1474794826', '1474794826', '37', '0-37', '5', '1', '');
+INSERT INTO `auth_rule` VALUES ('58', 'admin/other/set', '默认回复设置', '1', '1', '', '1474794845', '1474794845', '57', '0-37-57', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for diymen
@@ -181,7 +183,7 @@ CREATE TABLE `img` (
 -- ----------------------------
 -- Records of img
 -- ----------------------------
-INSERT INTO `img` VALUES ('2', '宁静的夏天', '2', '宁静的夏天', '0', '/uploads/image/20160730/20160730153101_34079.jpg', '1', '宁静的夏天', '', '0', '宁静的夏天', '1', '1469872191', '1469864563');
+INSERT INTO `img` VALUES ('2', '宁静的夏天', '2', '宁静的夏天', '0', '/uploads/image/20160730/20160730153101_34079.jpg', '1', '宁静的夏天', '', '10', '宁静的夏天', '1', '1469872191', '1469864563');
 
 -- ----------------------------
 -- Table structure for keyword
@@ -204,6 +206,23 @@ CREATE TABLE `keyword` (
 -- ----------------------------
 INSERT INTO `keyword` VALUES ('5', '宁静的夏天', '2', 'img', '2', '1469872191', '1469864563');
 INSERT INTO `keyword` VALUES ('7', 'hello', '2', 'text', '1', '1469945822', '1469945822');
+
+-- ----------------------------
+-- Table structure for other
+-- ----------------------------
+DROP TABLE IF EXISTS `other`;
+CREATE TABLE `other` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `keyword` varchar(60) NOT NULL,
+  `create_time` int(11) NOT NULL,
+  `update_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of other
+-- ----------------------------
+INSERT INTO `other` VALUES ('1', 'hello', '1474794855', '1474794855');
 
 -- ----------------------------
 -- Table structure for tetris
@@ -265,7 +284,7 @@ CREATE TABLE `ucenter_member` (
 -- ----------------------------
 -- Records of ucenter_member
 -- ----------------------------
-INSERT INTO `ucenter_member` VALUES ('1', 'admin', '779d005fa526b871d424fcab8140582f', '296720094@qq.com', '18053449656', '0', '1474774373', '2130706433', '1', '0', '1474774373');
+INSERT INTO `ucenter_member` VALUES ('1', 'admin', '779d005fa526b871d424fcab8140582f', '296720094@qq.com', '18053449656', '0', '1474794137', '2130706433', '1', '0', '1474794137');
 INSERT INTO `ucenter_member` VALUES ('4', 'test', '779d005fa526b871d424fcab8140582f', '', '', '127.0.0.1', '1469946812', '2130706433', '1', '1467356831', '1469946812');
 
 -- ----------------------------
