@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use think\Controller;
 use app\admin\api\UserApi;
+use Gregwar\Captcha\CaptchaBuilder;
 
 class Index extends Controller{
 	/**
@@ -13,7 +14,7 @@ class Index extends Controller{
 	public function index(){
 		// 检测登录状态
 		if(session('user_auth') && session('user_auth_sign')){
-			$this->redirect(url('main/index'));
+			$this->redirect('main/index');
 		}
 		if(request()->isPost()){
 			$username = input('post.username');
@@ -22,7 +23,9 @@ class Index extends Controller{
 			if(!$code){
 				return $this->error('请填写验证码');
 			}
-			if(!captcha_check($code)){
+			$phrase = session('phrase');
+			session('phrase', null);
+			if($phrase != $code){
 				return $this->error('验证码错误');
 			}
 			if(!$username || !$password){
@@ -41,7 +44,7 @@ class Index extends Controller{
 				];
 				session('user_auth',$auth);
 				session('user_auth_sign', data_auth_sign($auth));
-				return $this->success('登录成功',url('main/index'));
+				return $this->success('登录成功','main/index');
 			}else{
 				switch ($uid) {
 					case '-1':
@@ -60,5 +63,12 @@ class Index extends Controller{
 		}else{
 			return view('index');
 		}
+	}
+
+	public function captcha()
+	{
+		$builder = new CaptchaBuilder;
+		$builder->build()->output();
+		session('phrase', $builder->getPhrase());
 	}
 }

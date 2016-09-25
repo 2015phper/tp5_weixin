@@ -10,7 +10,7 @@ class AuthRule extends Base{
 	 * @return   [type]                   [description]
 	 */
 	public function index(){
-		$authRuleData = \think\Db::query('select id,name,title,pid,sort,path,type,concat(path,"-",id) as bpath from auth_rule where status=1 order by bpath');
+		$authRuleData = \think\Db::query('select id,name,title,pid,sort,path,type,icon,concat(path,"-",id) as bpath from auth_rule where status=1 order by bpath');
 		foreach ($authRuleData as $key => $value) {
 			$authRuleData[$key]['count'] = count(explode('-', $value['path']));
 		}
@@ -26,14 +26,14 @@ class AuthRule extends Base{
 	public function add(){
 		if(request()->isPost()){
 			$authRuleModel = new AuthRuleModel;
-			if($id = $authRuleModel->validate(true)->save(input('post.'))){
+			if($authRuleModel->validate(true)->save(input('post.'))){
 				// 给管理员添加全部权限
 				$authGroupData = \think\Db::name('auth_group')->field('rules')->where('id',1)->find();
-				$rules = $authGroupData['rules'] . ',' . $id;
+				$rules = $authGroupData['rules'] . ',' . $authRuleModel->id;
 				\think\Db::name('auth_group')->where('id',1)->update(['rules'=>$rules]);
 				$this->getSidebar();
 				session('_auth_list_'.session('user_auth')['uid'].'1', null);
-				return $this->success('添加成功',url('index'));
+				return $this->success('添加成功','index');
 			}else{
 				return $this->error($authRuleModel->getError());
 			}
@@ -66,7 +66,7 @@ class AuthRule extends Base{
 			if($authRuleModel->validate(true)->save(input('post.'), ['id'=>$id])){
 				$this->getSidebar();
 				session('_auth_list_'.session('user_auth')['uid'].'1', null);
-				return $this->success('修改成功',url('index'));
+				return $this->success('修改成功','index');
 			}else{
 				return $this->error($authRuleModel->getError());
 			}			
@@ -75,7 +75,7 @@ class AuthRule extends Base{
 			if(!$id){
 				return $this->error('参数错误');
 			}
-			$data = \think\Db::name('auth_rule')->field('id,name,title,type,condition,pid,sort,is_show')->where('id',$id)->find();
+			$data = \think\Db::name('auth_rule')->field('id,name,title,type,condition,pid,sort,is_show,icon')->where('id',$id)->find();
 			$pidData = \think\Db::query('select id,title,path,concat(path,"-",id) as bpath from auth_rule where status=1 and type=1 and is_show=1 order by bpath');
 			foreach ($pidData as $key => $value) {
 				$pidData[$key]['count'] = count(explode('-', $value['path']));

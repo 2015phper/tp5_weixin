@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : localhost_3306
 Source Server Version : 50547
 Source Host           : localhost:3306
-Source Database       : tp14
+Source Database       : tp5_weixin
 
 Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2016-08-12 14:24:42
+Date: 2016-09-25 11:34:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -88,47 +88,48 @@ CREATE TABLE `auth_rule` (
   `path` varchar(100) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '0',
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `icon` varchar(30) NOT NULL COMMENT '图标',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of auth_rule
 -- ----------------------------
-INSERT INTO `auth_rule` VALUES ('1', 'admin/main/index', '控制面板', '1', '1', '', '0', '0', '0', '0', '1', '1');
-INSERT INTO `auth_rule` VALUES ('2', '', '系统', '1', '1', '', '0', '1466909995', '0', '0', '200', '1');
-INSERT INTO `auth_rule` VALUES ('3', 'admin/auth_group/index', '角色管理', '1', '1', '', '0', '0', '2', '0-2', '1', '1');
-INSERT INTO `auth_rule` VALUES ('4', 'admin/auth_rule/index', '权限列表', '1', '1', '', '0', '1466746258', '2', '0-2', '2', '1');
-INSERT INTO `auth_rule` VALUES ('5', 'admin/auth_rule/add', '添加权限', '1', '1', '', '0', '1466686168', '4', '0-2-4', '1', '0');
-INSERT INTO `auth_rule` VALUES ('6', 'admin/user/logout', '退出登录', '1', '1', '', '0', '0', '0', '0', '0', '0');
-INSERT INTO `auth_rule` VALUES ('7', 'admin/auth_group/add', '添加角色', '1', '1', '', '0', '0', '3', '0-2-3', '0', '0');
-INSERT INTO `auth_rule` VALUES ('8', 'admin/auth_group/edit', '编辑角色', '1', '1', '', '0', '0', '3', '0-2-3', '0', '0');
-INSERT INTO `auth_rule` VALUES ('9', 'admin/auth_group/del', '删除角色', '1', '1', '', '0', '0', '3', '0-2-3', '0', '0');
-INSERT INTO `auth_rule` VALUES ('10', 'admin/auth_rule/edit', '编辑权限', '1', '1', '', '0', '1466686416', '4', '0-2-4', '2', '0');
-INSERT INTO `auth_rule` VALUES ('11', 'admin/user/changePwd', '修改密码', '1', '1', '', '1466688085', '1466688085', '0', '0', '0', '0');
-INSERT INTO `auth_rule` VALUES ('12', 'admin/auth_group/resource', '资源管理', '1', '1', '', '1466688887', '1466688887', '3', '0-2-3', '0', '0');
-INSERT INTO `auth_rule` VALUES ('13', 'admin/user/index', '用户管理', '1', '1', '', '1466778713', '1466778747', '2', '0-2', '0', '1');
-INSERT INTO `auth_rule` VALUES ('14', 'admin/user/edit', '编辑用户', '1', '1', '', '1466779374', '1466779374', '13', '0-2-13', '0', '0');
-INSERT INTO `auth_rule` VALUES ('15', 'admin/user/del', '删除用户', '1', '1', '', '1466779400', '1466779400', '13', '0-2-13', '0', '0');
-INSERT INTO `auth_rule` VALUES ('16', 'admin/user/add', '添加用户', '1', '1', '', '1466780028', '1466780028', '13', '0-2-13', '0', '0');
-INSERT INTO `auth_rule` VALUES ('17', 'admin/auth_rule/del', '删除权限', '1', '1', '', '1466911172', '1466911172', '4', '0-2-4', '0', '0');
-INSERT INTO `auth_rule` VALUES ('46', 'admin/img/edit', '编辑图文回复', '1', '1', '', '1469860004', '1469860004', '44', '0-37-44', '0', '0');
-INSERT INTO `auth_rule` VALUES ('45', 'admin/img/add', '添加图文回复', '1', '1', '', '1469848740', '1469848740', '44', '0-37-44', '0', '0');
-INSERT INTO `auth_rule` VALUES ('44', 'admin/img/index', '图文回复', '1', '1', '', '1469848715', '1469848715', '37', '0-37', '3', '1');
-INSERT INTO `auth_rule` VALUES ('43', 'admin/areply/set', '设置关注回复', '1', '1', '', '1469846640', '1469846640', '38', '0-37-38', '0', '0');
-INSERT INTO `auth_rule` VALUES ('42', 'admin/text/del', '删除文本回复', '1', '1', '', '1469797962', '1469797962', '39', '0-37-39', '0', '0');
-INSERT INTO `auth_rule` VALUES ('41', 'admin/text/edit', '编辑文本回复', '1', '1', '', '1469797940', '1469797940', '39', '0-37-39', '0', '0');
-INSERT INTO `auth_rule` VALUES ('40', 'admin/text/add', '添加文本回复', '1', '1', '', '1469797906', '1469797919', '39', '0-37-39', '0', '0');
-INSERT INTO `auth_rule` VALUES ('39', 'admin/text/index', '文本回复', '1', '1', '', '1469797613', '1469797613', '37', '0-37', '2', '1');
-INSERT INTO `auth_rule` VALUES ('28', 'admin/clear/index', '清除缓存', '1', '1', '', '1467706434', '1467706434', '0', '0', '199', '1');
-INSERT INTO `auth_rule` VALUES ('37', '', '基础功能', '1', '1', '', '1469778251', '1469778251', '0', '0', '2', '1');
-INSERT INTO `auth_rule` VALUES ('31', 'admin/user/resetPwd', '重置密码', '1', '1', '', '1467942854', '1468997612', '0', '0', '0', '0');
-INSERT INTO `auth_rule` VALUES ('54', 'admin/diymen/edit', '编辑菜单', '1', '1', '', '1469959336', '1469959343', '52', '0-37-52', '0', '0');
-INSERT INTO `auth_rule` VALUES ('55', 'admin/diymen/del', '删除菜单', '1', '1', '', '1469959363', '1469959363', '52', '0-37-52', '0', '0');
-INSERT INTO `auth_rule` VALUES ('47', 'admin/img/del', '删除图文回复', '1', '1', '', '1469860030', '1469860030', '44', '0-37-44', '0', '0');
-INSERT INTO `auth_rule` VALUES ('38', 'admin/areply/index', '关注回复', '1', '1', '', '1469778312', '1469778312', '37', '0-37', '1', '1');
-INSERT INTO `auth_rule` VALUES ('53', 'admin/diymen/add', '添加菜单', '1', '1', '', '1469959321', '1469959321', '52', '0-37-52', '0', '0');
-INSERT INTO `auth_rule` VALUES ('52', 'admin/diymen/index', '自定义菜单', '1', '1', '', '1469949477', '1469950606', '37', '0-37', '4', '1');
-INSERT INTO `auth_rule` VALUES ('56', 'admin/diymen/createMenu', '生成菜单', '1', '1', '', '1469961548', '1469961576', '52', '0-37-52', '0', '0');
+INSERT INTO `auth_rule` VALUES ('1', 'admin/main/index', '控制面板', '1', '1', '', '0', '0', '0', '0', '1', '1', '');
+INSERT INTO `auth_rule` VALUES ('2', '', '系统', '1', '1', '', '0', '1466909995', '0', '0', '200', '1', '');
+INSERT INTO `auth_rule` VALUES ('3', 'admin/auth_group/index', '角色管理', '1', '1', '', '0', '0', '2', '0-2', '1', '1', '');
+INSERT INTO `auth_rule` VALUES ('4', 'admin/auth_rule/index', '权限列表', '1', '1', '', '0', '1466746258', '2', '0-2', '2', '1', '');
+INSERT INTO `auth_rule` VALUES ('5', 'admin/auth_rule/add', '添加权限', '1', '1', '', '0', '1466686168', '4', '0-2-4', '1', '0', '');
+INSERT INTO `auth_rule` VALUES ('6', 'admin/user/logout', '退出登录', '1', '1', '', '0', '0', '0', '0', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('7', 'admin/auth_group/add', '添加角色', '1', '1', '', '0', '0', '3', '0-2-3', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('8', 'admin/auth_group/edit', '编辑角色', '1', '1', '', '0', '0', '3', '0-2-3', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('9', 'admin/auth_group/del', '删除角色', '1', '1', '', '0', '0', '3', '0-2-3', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('10', 'admin/auth_rule/edit', '编辑权限', '1', '1', '', '0', '1466686416', '4', '0-2-4', '2', '0', '');
+INSERT INTO `auth_rule` VALUES ('11', 'admin/user/changePwd', '修改密码', '1', '1', '', '1466688085', '1466688085', '0', '0', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('12', 'admin/auth_group/resource', '资源管理', '1', '1', '', '1466688887', '1466688887', '3', '0-2-3', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('13', 'admin/user/index', '用户管理', '1', '1', '', '1466778713', '1466778747', '2', '0-2', '0', '1', '');
+INSERT INTO `auth_rule` VALUES ('14', 'admin/user/edit', '编辑用户', '1', '1', '', '1466779374', '1466779374', '13', '0-2-13', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('15', 'admin/user/del', '删除用户', '1', '1', '', '1466779400', '1466779400', '13', '0-2-13', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('16', 'admin/user/add', '添加用户', '1', '1', '', '1466780028', '1466780028', '13', '0-2-13', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('17', 'admin/auth_rule/del', '删除权限', '1', '1', '', '1466911172', '1466911172', '4', '0-2-4', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('46', 'admin/img/edit', '编辑图文回复', '1', '1', '', '1469860004', '1469860004', '44', '0-37-44', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('45', 'admin/img/add', '添加图文回复', '1', '1', '', '1469848740', '1469848740', '44', '0-37-44', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('44', 'admin/img/index', '图文回复', '1', '1', '', '1469848715', '1469848715', '37', '0-37', '3', '1', '');
+INSERT INTO `auth_rule` VALUES ('43', 'admin/areply/set', '设置关注回复', '1', '1', '', '1469846640', '1469846640', '38', '0-37-38', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('42', 'admin/text/del', '删除文本回复', '1', '1', '', '1469797962', '1469797962', '39', '0-37-39', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('41', 'admin/text/edit', '编辑文本回复', '1', '1', '', '1469797940', '1469797940', '39', '0-37-39', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('40', 'admin/text/add', '添加文本回复', '1', '1', '', '1469797906', '1469797919', '39', '0-37-39', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('39', 'admin/text/index', '文本回复', '1', '1', '', '1469797613', '1469797613', '37', '0-37', '2', '1', '');
+INSERT INTO `auth_rule` VALUES ('28', 'admin/clear/index', '清除缓存', '1', '1', '', '1467706434', '1467706434', '0', '0', '199', '1', '');
+INSERT INTO `auth_rule` VALUES ('37', '', '基础功能', '1', '1', '', '1469778251', '1469778251', '0', '0', '2', '1', '');
+INSERT INTO `auth_rule` VALUES ('31', 'admin/user/resetPwd', '重置密码', '1', '1', '', '1467942854', '1468997612', '0', '0', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('54', 'admin/diymen/edit', '编辑菜单', '1', '1', '', '1469959336', '1469959343', '52', '0-37-52', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('55', 'admin/diymen/del', '删除菜单', '1', '1', '', '1469959363', '1469959363', '52', '0-37-52', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('47', 'admin/img/del', '删除图文回复', '1', '1', '', '1469860030', '1469860030', '44', '0-37-44', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('38', 'admin/areply/index', '关注回复', '1', '1', '', '1469778312', '1469778312', '37', '0-37', '1', '1', '');
+INSERT INTO `auth_rule` VALUES ('53', 'admin/diymen/add', '添加菜单', '1', '1', '', '1469959321', '1469959321', '52', '0-37-52', '0', '0', '');
+INSERT INTO `auth_rule` VALUES ('52', 'admin/diymen/index', '自定义菜单', '1', '1', '', '1469949477', '1469950606', '37', '0-37', '4', '1', '');
+INSERT INTO `auth_rule` VALUES ('56', 'admin/diymen/createMenu', '生成菜单', '1', '1', '', '1469961548', '1469961576', '52', '0-37-52', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for diymen
@@ -264,7 +265,7 @@ CREATE TABLE `ucenter_member` (
 -- ----------------------------
 -- Records of ucenter_member
 -- ----------------------------
-INSERT INTO `ucenter_member` VALUES ('1', 'admin', '779d005fa526b871d424fcab8140582f', '296720094@qq.com', '18053449656', '0', '1470981411', '2130706433', '1', '0', '1470981451');
+INSERT INTO `ucenter_member` VALUES ('1', 'admin', '779d005fa526b871d424fcab8140582f', '296720094@qq.com', '18053449656', '0', '1474774373', '2130706433', '1', '0', '1474774373');
 INSERT INTO `ucenter_member` VALUES ('4', 'test', '779d005fa526b871d424fcab8140582f', '', '', '127.0.0.1', '1469946812', '2130706433', '1', '1467356831', '1469946812');
 
 -- ----------------------------

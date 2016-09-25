@@ -1,51 +1,128 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-// $Id$
-return [
-    // 数据库类型
-    'type'           => 'mysql',
-    // 服务器地址
-    'hostname'       => '127.0.0.1',
-    // 数据库名
-    'database'       => 'tp14',
-    // 用户名
-    'username'       => 'root',
-    // 密码
-    'password'       => 'root',
-    // 端口
-    'hostport'       => '',
-    // 连接dsn
-    'dsn'            => '',
-    // 数据库连接参数
-    'params'         => [],
-    // 数据库编码默认采用utf8
-    'charset'        => 'utf8',
-    // 数据库表前缀
-    'prefix'         => '',
-    // 数据库调试模式
-    'debug'          => true,
-    // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
-    'deploy'         => 0,
-    // 数据库读写是否分离 主从式有效
-    'rw_separate'    => false,
-    // 读写分离后 主服务器数量
-    'master_num'     => 1,
-    // 指定从服务器序号
-    'slave_no'       => '',
-    // 是否严格检查字段是否存在
-    'fields_strict'  => true,
-    // 数据集返回类型 array 数组 collection Collection对象
-    'resultset_type' => 'array',
-    // 是否自动写入时间戳字段
-    'auto_timestamp' => true,
-    // 是否需要进行SQL性能分析
-    'sql_explain'    => false,
-];
+namespace app\admin\controller;
+use app\admin\model\Img as ImgModel;
+use app\admin\model\Keyword as KeywordModel;
+use think\Db;
+class Img extends Base{
+    /**
+     * 图文回复列表
+     * @author ning
+     * @DateTime 2016-07-30T14:41:15+0800
+     * @return   [type]                   [description]
+     */
+    public function index(){
+        $list = Db::table('img')->paginate('10');
+        $this->assign('list', $list);
+        return view('index');
+    }
+    /**
+     * 添加图文回复
+     * @author ning
+     * @DateTime 2016-07-30T14:48:21+0800
+     */
+    public function add(){
+        if(request()->isPost()){
+            Db::startTrans();
+            try{
+                $imgModel = new ImgModel;
+                if(!$id = $imgModel->validate(true)->save(input('post.'))){
+                    return $this->error($imgModel->getError());
+                }
+                $keywordModel = new KeywordModel;
+                $data = [
+                    'keyword'=>input('post.keyword'),
+                    'pid'=>$id,
+                    'type'=>input('post.type'),
+                    'module'=>'img'
+                ];
+                if(!$keywordModel->validate(true)->save($data)){
+                    return $this->error($keywordModel->getError());
+                }
+                Db::commit();
+                return $this->success('添加成功',url('img/index'));
+            }catch(\PDOException $e){
+                Db::rollback();
+                return $this->error('添加失败');
+            }
+        }else{
+            return view('add');
+        }
+    }
+    /**
+     * 编辑图文回复
+     * @author ning
+     * @DateTime 2016-07-30T18:05:37+0800
+     * @return   [type]                   [description]
+     */
+    public function edit(){
+        if(request()->isPost()){
+            $id = input('?param.id') ? input('param.id') : '';
+            $keyword = input('post.keyword') ? input('post.keyword') : '';
+            if(!$id || !$keyword){
+                return $this->error('参数错误');
+            }
+            Db::startTrans();
+            try{
+                $imgModel = new ImgModel;
+                if(!$imgModel->validate(true)->save(input('post.'),['id'=>$id])){
+                    return $this->error($imgModel->getError());
+                }
+                $keywordModel = new KeywordModel;
+                $keywordData = Db::table('keyword')->field('id,type')->where('keyword',$keyword)->find();
+                if(!$keywordData){
+                    if(!$keywordModel->validate('Keyword.edit')->save(['keyword'=>$keyword,'type'=>input('post.type')], function($query) use($id){
+                        $query->where('pid',$id)->where('module','img');
+                    })){
+                        return $this->error($keywordModel->getError());
+                    }
+                }else{
+                    if($keywordData['type'] != input('post.type')){
+                        if(!$keywordModel->save(['type'=>input('post.type')], function($query) use($id){
+                            $query->where('pid', $id)->where('module', 'img');
+                        })){
+                            return $this->error($keywordModel->getError());
+                        }
+                    }
+                }
+                
+                Db::commit();
+                return $this->success('修改成功', url('img/index'));
+            }catch(\PDOException $e){
+                Db::rollback();
+                return $this->error('修改失败');
+            }
+        }else{
+            $id = input('?param.id') ? input('param.id') : '';
+            if(!$id){
+                return $this->error('参数错误');
+            }
+            $data = Db::table('img')->where('id', $id)->find();
+            $this->assign('data', $data);
+            return view('edit');
+        }
+    }
+    /**
+     * 删除图文回复
+     * @author ning
+     * @DateTime 2016-07-30T15:08:10+0800
+     * @return   [type]                   [description]
+     */
+    public function del(){
+        $id = input('?param.id') ? input('param.id') : '';
+        if(!$id){
+            return $this->error('参数错误');
+        }
+        Db::startTrans();
+        try{
+            $imgModel = new ImgModel;
+            $imgModel->where('id', $id)->delete();
+            $keywordModel = new KeywordModel;
+            $keywordModel->where('pid', $id)->where('module','img')->delete();
+            Db::commit();
+            return $this->success('删除成功');
+        }catch(\PDOException $e){
+            Db::rollback();
+            return $this->error('修改失败');
+        }
+    }
+}

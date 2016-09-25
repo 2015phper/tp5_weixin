@@ -6,24 +6,19 @@ class Base extends Controller{
 	public function _initialize(){
 		// 判断是否登录，没有登录跳转登录页面
 		if(!session('user_auth') || !session('user_auth_sign')){
-			$this->redirect(url('index/index'));
+			$this->redirect('index/index');
 		}
-
-		$module = $this->request->module();
-		$controller = $this->request->controller();
-		$action = $this->request->action();
-
+		$dispatch = $this->request->dispatch();
+		$activeRouter = $dispatch['module']['0'] . '/' . $dispatch['module'][1] . '/' . $dispatch['module'][2];
 		$auth = new \com\Auth();
-		if(!$auth->check($module . '/' . $controller  . '/' . $action, session('user_auth')['uid'])){
-			return $this->error('没有权限');
+		if(!$auth->check($activeRouter, session('user_auth')['uid'])){
+			return $this->error('没有权限','index/index');
 		}
 		if(!session('sidebar')){
 			$this->getSidebar();
 		}
 		$sidebar = session('sidebar');
-		
-		$activeRouter = $module.'/'.$controller.'/'.$action;
-
+	
 		$parent_id_1 = 0;
 		$parent_id_2 = 0;
 		$resource1 = \think\Db::name('auth_rule')->field('id,name,title,pid')->where('name',$activeRouter)->find();
@@ -55,7 +50,7 @@ class Base extends Controller{
 	protected function getSidebar(){
 		$authGroupAccessData = \think\Db::name('auth_group_access')->field('group_id')->where('uid',session('user_auth')['uid'])->find();
 		$authGroupData = \think\Db::name('auth_group')->field('rules')->where('id',$authGroupAccessData['group_id'])->find();
-		$authRuleData = \think\Db::name('auth_rule')->field('id,name,title,pid,sort,path')->where('id','in',$authGroupData['rules'])->where('type',1)->where('status',1)->where('is_show',1)->order('path,sort asc')->select();
+		$authRuleData = \think\Db::name('auth_rule')->field('id,name,title,icon,pid,sort,path')->where('id','in',$authGroupData['rules'])->where('type',1)->where('status',1)->where('is_show',1)->order('path,sort asc')->select();
 		$sidebar = [];
 		foreach ($authRuleData as $key => $value) {
 			$path = explode('-', $value['path']);

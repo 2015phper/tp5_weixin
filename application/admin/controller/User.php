@@ -11,7 +11,7 @@ class User extends Base{
 	 */
 	public function logout(){
 		session(null);
-		return $this->success('退出成功',url('index/index'));
+		return $this->success('退出成功','index/index');
 	}
 
 	/**
@@ -22,9 +22,9 @@ class User extends Base{
 	 */
 	public function changePwd(){
 		if(request()->isPost()){
-			// if(session('user_auth')['uid'] == 1){
-			// 	return $this->error('禁止修改管理员密码');
-			// }
+			if(session('user_auth')['uid'] == 1){
+				return $this->error('禁止修改管理员密码');
+			}
 			$oldPassword = input('?post.oldPassword') ? input('post.oldPassword') : '';
 			if(!$oldPassword){
 				return $this->error('请填写原密码');
@@ -78,7 +78,7 @@ class User extends Base{
 			}
 			$group_id = input('?post.group_id') ? input('post.group_id') : '';
 			if(!$group_id){
-				return $this->error('请创建角色',url('auth_group/add'));
+				return $this->error('请创建角色','auth_group/add');
 			}
 			$user = new UserApi;
 			$res = $user->register($username, '123456');
@@ -88,7 +88,7 @@ class User extends Base{
 					'group_id'=>$group_id
 				];	
 				\think\Db::name('auth_group_access')->insert($insertData);
-				return $this->success('添加成功',url('index'));
+				return $this->success('添加成功','index');
 			}else{
 				return $this->error($res);
 			}
@@ -114,14 +114,14 @@ class User extends Base{
 			}
 			$group_id = input('?post.group_id') ? input('post.group_id') : '';
 			if(!$group_id){
-				return $this->error('请创建角色',url('auth_group/add'));
+				return $this->error('请创建角色','auth_group/add');
 			}
 			$user = new UserApi;
 			$data = ['username'=>input('post.username')];
 			$res = $user->updateInfoNotCheck($id, $data);
 			if($res['status']){
 				\think\Db::name('auth_group_access')->where('uid',$id)->update(['group_id'=>$group_id]);
-				return $this->success('修改成功',url('index'));
+				return $this->success('修改成功','index');
 			}else{
 				return $this->error($res['info']);
 			}
@@ -156,26 +156,5 @@ class User extends Base{
 		}else{
 			return $this->error('删除失败');
 		}
-	}
-
-	/**
-	 * 重置密码
-	 * @author ning
-	 * @DateTime 2016-07-08T09:50:13+0800
-	 * @return   [type]                   [description]
-	 */
-	public function resetPwd(){
-		$id = input('?param.id') ? input('param.id') : '';
-		if(!$id){
-			return $this->error('参数错误');
-		}
-		$user = new UserApi;
-		$data = ['password'=>'123456'];
-		$res = $user->updateInfoNotCheck($id,$data);
-        if($res['status']){
-            return $this->success('重置密码成功！');
-        }else{
-            return $this->error($res['info']);
-        }
 	}
 }

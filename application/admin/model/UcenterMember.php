@@ -30,11 +30,6 @@ class UcenterMember extends Model{
 		return think_ucenter_md5($value, config('UC_AUTH_KEY'));
 	}
 
-	// 定义关联方法
-	public function authGroupAccess(){
-		return $this->hasOne('AuthGroupAccess','uid');
-	}
-
 	/**
 	 * 根据配置指定用户状态
 	 * @return integer 用户状态
@@ -59,7 +54,8 @@ class UcenterMember extends Model{
 			'mobile'   => $mobile,
 		);
 		/* 添加用户 */
-		if($uid = $this->validate(true)->save($data)){
+		if($this->validate(true)->save($data)){
+			$uid = $this->id;
 			return $uid ? $uid : 0; //0-未知错误，大于0-注册成功
 		} else {
 			return $this->getError(); //错误详情见自动验证注释
