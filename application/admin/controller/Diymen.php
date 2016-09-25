@@ -29,7 +29,7 @@ class Diymen extends Base{
 		if(request()->isPost()){
 			$diymenModel = new DiymenModel;
 			if($diymenModel->validate(true)->save(input('post.'))){
-				return $this->success('添加成功',url('diymen/index'));
+				return $this->success('添加成功','diymen/index');
 			}else{
 				return $this->error($diymenModel->getError());
 			}
@@ -53,7 +53,7 @@ class Diymen extends Base{
 			}
 			$diymenModel = new DiymenModel;
 			if($diymenModel->validate(true)->save(input('post.'),['id'=>$id])){
-				return $this->success('修改成功',url('diymen/index'));
+				return $this->success('修改成功','diymen/index');
 			}else{
 				return $this->error($diymenModel->getError());
 			}

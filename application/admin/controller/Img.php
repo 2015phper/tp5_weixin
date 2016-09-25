@@ -39,7 +39,7 @@ class Img extends Base{
                     return $this->error($keywordModel->getError());
                 }
                 Db::commit();
-                return $this->success('添加成功',url('img/index'));
+                return $this->success('添加成功','img/index');
             }catch(\PDOException $e){
                 Db::rollback();
                 return $this->error('添加失败');
@@ -86,7 +86,7 @@ class Img extends Base{
                 }
                 
                 Db::commit();
-                return $this->success('修改成功', url('img/index'));
+                return $this->success('修改成功','img/index');
             }catch(\PDOException $e){
                 Db::rollback();
                 return $this->error('修改失败');

@@ -42,7 +42,7 @@ class Text extends Base{
 					return $this->error($keywordModel->getError());
 				}
 				Db::commit();
-				return $this->success('添加成功',url('text/index'));
+				return $this->success('添加成功','text/index');
 			}catch(\PDOException $e){
 				Db::rollback();
 				return $this->error('添加失败');
@@ -84,7 +84,7 @@ class Text extends Base{
 				}
 
 				Db::commit();
-				return $this->success('修改成功',url('text/index'));
+				return $this->success('修改成功','text/index');
 			}catch(\PDOException $e){
 				Db::rollback();
 				return $this->error('修改失败');
