@@ -4,10 +4,7 @@
 ```
 git clone https://github.com/ningbnii/tp5_weixin.git
 ```
-- 然后进入项目根目录，下载TP5的核心框架包
-```
-git clone https://github.com/top-think/framework.git
-```
+
 ```
 composer update
 ```
