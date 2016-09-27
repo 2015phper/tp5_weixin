@@ -11,7 +11,7 @@ git clone https://github.com/top-think/framework.git
 ```
 composer update
 ```
-- 导入数据库，数据库文件为根目录下面的tp14.sql
+- 导入数据库，数据库文件为根目录下面的tp5_weixin.sql
 - 修改数据库配置文件
 - 修改config.php中的微信公众号相关参数，修改site_url,img_server为你自己的地址
 - 登陆用户名：admin 密码：123456
