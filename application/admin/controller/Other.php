@@ -29,7 +29,7 @@ class Other extends Base
 	 */
 	public function set(){
 		$data = Db::table('other')->find();
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$keyword = input('?post.keyword') ? input('post.keyword') : '';
 
 			$otherModel = new OtherModel;

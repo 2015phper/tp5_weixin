@@ -24,7 +24,7 @@ class AuthRule extends Base{
 	 * @DateTime 2016-06-22T22:26:12+0800
 	 */
 	public function add(){
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$authRuleModel = new AuthRuleModel;
 			if($authRuleModel->validate(true)->save(input('post.'))){
 				// 给管理员添加全部权限
@@ -54,7 +54,7 @@ class AuthRule extends Base{
 	 * @return   [type]                   [description]
 	 */
 	public function edit(){
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$id = input('?post.id') ? input('post.id') : '';
 			if(!$id){
 				return $this->error('参数错误');

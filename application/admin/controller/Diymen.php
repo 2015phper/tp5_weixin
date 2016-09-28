@@ -26,7 +26,7 @@ class Diymen extends Base{
 	 * @DateTime 2016-07-31T17:53:15+0800
 	 */
 	public function add(){
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$diymenModel = new DiymenModel;
 			if($diymenModel->validate(true)->save(input('post.'))){
 				return $this->success('添加成功','diymen/index');
@@ -46,7 +46,7 @@ class Diymen extends Base{
 	 * @return   [type]                   [description]
 	 */
 	public function edit(){
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$id = input('?post.id') ? input('post.id') : '';
 			if(!$id){
 				return $this->error('参数错误');
@@ -114,7 +114,7 @@ class Diymen extends Base{
 			'appsecret'=>config('appsecret')
 		];
 
-		$weObj = new \com\Wechat($options);
+		$weObj = new \com\TpWechat($options);
 		$menu = $weObj->getMenu();
 
 		$diymenModel = new DiymenModel;

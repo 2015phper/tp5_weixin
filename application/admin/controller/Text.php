@@ -24,7 +24,7 @@ class Text extends Base{
 	 * @DateTime 2016-07-29T21:13:18+0800
 	 */
 	public function add(){
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			Db::startTrans();
 			try{
 				$textModel = new TextModel;
@@ -59,7 +59,7 @@ class Text extends Base{
 	 * @return   [type]                   [description]
 	 */
 	public function edit(){
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$id = input('?post.id') ? input('post.id') : '';
 			$keyword = input('?post.keyword') ? input('post.keyword') : '';
 			if(!$id || !$keyword){

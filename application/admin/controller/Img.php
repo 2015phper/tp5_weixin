@@ -21,7 +21,7 @@ class Img extends Base{
      * @DateTime 2016-07-30T14:48:21+0800
      */
     public function add(){
-        if(request()->isPost()){
+        if(request()->isPost() && input('post.')){
             Db::startTrans();
             try{
                 $imgModel = new ImgModel;
@@ -55,7 +55,7 @@ class Img extends Base{
      * @return   [type]                   [description]
      */
     public function edit(){
-        if(request()->isPost()){
+        if(request()->isPost() && input('post.')){
             $id = input('?param.id') ? input('param.id') : '';
             $keyword = input('post.keyword') ? input('post.keyword') : '';
             if(!$id || !$keyword){

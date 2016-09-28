@@ -11,11 +11,11 @@ class Api{
 			'appid'=>config('appid'),
 			'appsecret'=>config('appsecret')
 		];
-		$this->weObj = new \com\Wechat($options);
+		$this->weObj = new \com\TpWechat($options);
 		$this->weObj->valid();
 		$type = $this->weObj->getRev()->getRevType();
 		switch ($type) {
-			case \com\Wechat::MSGTYPE_TEXT:
+			case \com\TpWechat::MSGTYPE_TEXT:
 				$text = $this->weObj->getRev()->getRevContent();
 				$this->keyword($text);
 				exit;
@@ -29,7 +29,7 @@ class Api{
 		$event = $this->weObj->getRev()->getRevEvent();
 		switch ($event['event']) {
 			// 订阅
-			case \com\Wechat::EVENT_SUBSCRIBE:
+			case \com\TpWechat::EVENT_SUBSCRIBE:
 				$areplyData = cache('areply');
 				if(!$areplyData){
 					$areplyData = Db::name('areply')->find();
@@ -44,7 +44,7 @@ class Api{
 				exit;
 				break;
 
-			case \com\Wechat::EVENT_MENU_CLICK:
+			case \com\TpWechat::EVENT_MENU_CLICK:
 				$this->keyword($event['key']);
 				exit;
 				break;

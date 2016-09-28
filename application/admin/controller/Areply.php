@@ -22,7 +22,7 @@ class Areply extends Base{
 	 */
 	public function set(){
 		$data = Db::table('areply')->find();
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$keyword = input('?post.keyword') ? input('post.keyword') : '';
 
 			$areplyModel = new AreplyModel;

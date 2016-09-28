@@ -16,7 +16,7 @@ class Index extends Controller{
 		if(session('user_auth') && session('user_auth_sign')){
 			$this->redirect('main/index');
 		}
-		if(request()->isPost()){
+		if(request()->isPost() && input('post.')){
 			$username = input('post.username');
 			$password = input('post.password');
 			$code = input('post.code');
