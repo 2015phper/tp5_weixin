@@ -28,10 +28,10 @@ class Text extends Base{
 			Db::startTrans();
 			try{
 				$textModel = new TextModel;
-				if(!$id = $textModel->validate(true)->save(input('post.'))){
+				if($textModel->validate(true)->save(input('post.'))){
 					return $this->error($textModel->getError());
 				}
-
+				$id = $textModel->id;
 				$keywordModel = new KeywordModel;
 				$data = [
 					'keyword'=>input('post.keyword'),

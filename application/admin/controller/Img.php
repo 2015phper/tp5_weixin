@@ -25,9 +25,10 @@ class Img extends Base{
             Db::startTrans();
             try{
                 $imgModel = new ImgModel;
-                if(!$id = $imgModel->validate(true)->save(input('post.'))){
+                if($imgModel->validate(true)->save(input('post.'))){
                     return $this->error($imgModel->getError());
                 }
+                $id = $imgModel->id;
                 $keywordModel = new KeywordModel;
                 $data = [
                     'keyword'=>input('post.keyword'),
