@@ -2,4 +2,3 @@
 composer.lock
 *.log
 sftp-config.json
-/vendor
