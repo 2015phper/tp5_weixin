@@ -120,7 +120,12 @@ class Api{
 			if(!$otherData){
 				$this->weObj->text('感谢您的关注，技术QQ：296720094')->reply();
 			}else{
-				$this->keyword($otherData['keyword']);
+				$data = Db::name('keyword')->where('keyword',$otherData['keyword'])->find();
+				if($data){
+					$this->keyword($otherData['keyword']);
+				}else{
+					$this->weObj->text('感谢您的关注，技术QQ：296720094')->reply();
+				}
 			}
 		}
 
